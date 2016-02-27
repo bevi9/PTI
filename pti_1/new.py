@@ -7,6 +7,9 @@ import cgi, os, re, sys, string, time, csv
 # Programa principal
 print "Content-type: text/html\n\n"
 
+home = "http://localhost/p1/carrental_home.html"
+new = "http://localhost/p1/carrental_form_new.html"
+
 c = csv.writer(open("car.csv","a"))
 form = cgi.FieldStorage()
 model_vehicle = form.getvalue('model_vehicle')
@@ -18,11 +21,44 @@ elif model_vehicle == 82:
 	 model_vehicle = "Luxe"
 elif model_vehicle == 139:
 	 model_vehicle = "Limusina"
-engine = form.getvalue('sub_model_vehicle')
-days = form.getvalue('dies_lloguer')
-units = form.getvalue('num_vehicles')
-des = form.getvalue('descompte')
 
-c.writerow([model_vehicle,engine,days,units,des])
+engine = form.getvalue('sub_model_vehicle')
+try:
+	days = int(form.getvalue('dies_lloguer'))
+	units = int(form.getvalue('num_vehicles'))
+	des = float(form.getvalue('descompte'))
+except:
+    print '<html>'
+    print ' <body>'
+    print "  <h1>T'ha faltat intruduir parametres</h1>"
+    print ' <head>'
+    print '  <a href="%s">Tornar a introduir el cotxe</a>' % new
+    print ' </head>'
+    print '</body>'
+    print '</html>'
+
+if days <= 0 or des <= 0 or units <= 0 or ((des).is_integer() and des != 0.0 and des != 1.0):
+
+    print '<html>'
+    print ' <body>'
+    print "  <h1>Has introduit malament els parametres, siusplau torne'ls ha intruduir</h1>"
+    print "  <h2>Recorda que el descompte ha d'anar amb punt</h2>"
+    print ' <head>'
+    print '  <a href="%s">Tornar a introduir el cotxe</a>' % new
+    print ' </head>'
+    print '</body>'
+    print '</html>'
+  	
+else:
+    print '<html>'
+    print  '<body>'
+    print ' <h1>Has introduit el cotxe perfectament</h1>'
+    print '   <head>'
+    print '     <meta http-equiv="refresh" content="4;url=%s" />' % home
+    print "     <h3>Redirigint a la pagina d'inici</h3>"
+    print '   </head>'
+    print ' </body>'
+    print '</html>'
+    c.writerow([model_vehicle,engine,days,units,des])
 
 

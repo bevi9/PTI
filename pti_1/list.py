@@ -7,6 +7,6 @@ import cgi, os, re, sys, string, time, csv
 print "Content-type: text/html\n\n"
 c = csv.reader(open("car.csv","rb"))
 for row in c:
-	print row
+	print ', '.join(row)
 
 

@@ -44,10 +44,10 @@ ok = 0
 if des == 0.0 or des == 1.0:
     ok = 1
 
-if (days <= 0 or des <= 0 or units <= 0 or (des).is_integer() or des > 1) and ok != 1: 
+if days <= 0 or des <= 0 or units <= 0 or ((des).is_integer() or des > 1) and ok != 1: 
     print '<html>'
     print ' <body>'
-    print "  <h1>Has introduit malament els parametres, siusplau torne'ls ha intruduir</h1>"
+    print "  <h1>Has introduit malament els parametres, si-us-plau torna'ls ha introduir</h1>"
     print "  <h2>Recorda que el descompte ha d'anar amb punt</h2>"
     print ' <head>'
     print '  <a href="%s">Tornar a introduir el cotxe</a>' % new
@@ -64,8 +64,7 @@ else:
     print  '<body>'
     print ' <h2>Has introduit el cotxe perfectament</h2>'
     print ' <h2>Cost del servei % s $</h2>' % cost
-    print ' <h2>Per llogar % s cotxe/s % s i % s durant % s dia/es amb el descompte 
-    print '		del % s</h2' % (units, model_vehicle, engine, days, des)
+    print ' <h2>Per llogar % s cotxe/s % s i % s durant % s dia/es amb el descompte del % s</h2' % (units, model_vehicle, engine, days, des)
     print '   <head>'
     print '     <a href="%s">Home</a>' % home
     print '   </head>'

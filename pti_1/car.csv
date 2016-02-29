@@ -1,1 +1,5 @@
-54
+Car Model,Engine,Number of days,Number of units,Descompte,Cost
+Semi-luxe,Diesel,16,100,0.5,16000.0
+Limusina,Diesel,16,100,0.5,32000.0
+Limusina,Diesel,16,100,0.3,19200.0
+Economic,Diesel,1,1,0.0,10

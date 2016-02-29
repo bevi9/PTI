@@ -33,7 +33,7 @@ try:
 except:
     print '<html>'
     print ' <body>'
-    print "  <h1>T'ha faltat intruduir parametres</h1>"
+    print "  <h1>T'ha faltat introduir parametres</h1>"
     print ' <head>'
     print '  <a href="%s">Tornar a introduir el cotxe</a>' % new
     print ' </head>'
@@ -58,7 +58,7 @@ if days <= 0 or des <= 0 or units <= 0 or ((des).is_integer() or des > 1) and ok
   	
 else:
     if des == 0.0: cost = cost * days * units
-    elif des == 1.0: cost = 0
+    elif des == 1.0: cost = 0.0
     else: cost = cost * des * days * units
     print '<html>'
     print  '<body>'

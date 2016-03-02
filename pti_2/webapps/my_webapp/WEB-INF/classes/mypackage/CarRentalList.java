@@ -11,8 +11,8 @@ public class CarRentalList extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse res)
                     throws ServletException, IOException {
     res.setContentType("text/html");
-    File file = new File("/var/lib/tomcat7/webapp/my_webapp/WEB-INF/classes/mypackage/car.txt")
-    FileReader fileReader = FileReader(file);
+    File file = new File("/var/lib/tomcat7/webapps/my_webapp/WEB-INF/classes/mypackage/car.txt");
+    FileReader fileReader = new FileReader(file);
     BufferedReader bufferedReader = new BufferedReader(fileReader);
     StringBuffer stringBuffer= new StringBuffer();
     String line;
@@ -21,17 +21,12 @@ public class CarRentalList extends HttpServlet {
         stringBuffer.append("\n");
       }
       fileReader.close();
-      System.out.println("Contents of file:");
-      System.out.println(stringBuffer.toString());
 
-    List<String> filetxt = new List<String>("/var/lib/tomcat7/webapp/my_webapp/WEB-INF/classes/mypackage/car.txt");
-    filetxt.readAllLines();
     PrintWriter out = res.getWriter();
+      out.println(stringBuffer.toString());
     String nombre = req.getParameter("userid");
     cont ++;
-    out.println("<html><big>Hola Amigo "+ nombre + "</big><br>"+
-                cont + " Accesos desde su carga.<br> Listado de coches alquilados: <br>" 
-                + filetxt + " </html>");
+
   }
 
   public void doPost(HttpServletRequest req, HttpServletResponse res)

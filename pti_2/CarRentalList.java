@@ -18,10 +18,11 @@ public class CarRentalList extends HttpServlet {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		StringBuffer stringBuffer= new StringBuffer();
 		String line;
+		out.println("<html>");
 		while ((line = bufferedReader.readLine()) != null) {
-		    stringBuffer.append(line);
-		    stringBuffer.append("\n");
+			out.println(line + "<br>");
 		  }
+		out.println("</html>");
 		  fileReader.close();
 
 		  out.println(stringBuffer.toString());

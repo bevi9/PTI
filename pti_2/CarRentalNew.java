@@ -17,6 +17,7 @@ public class CarRentalNew extends HttpServlet {
 	File f = new File("/var/lib/tomcat7/webapps/my_webapp/WEB-INF/classes/mypackage/car.txt");
 
     String model = req.getParameter("model_vehicle");
+	Double preu = Double.parseDouble(model);	
     String engine = req.getParameter("sub_model_vehicle");
  	String num = req.getParameter("num_vehicles");
 	String dies = req.getParameter("dies_lloguer");
@@ -29,17 +30,24 @@ public class CarRentalNew extends HttpServlet {
 
 	
 	if(num != null && !num.isEmpty() && dies != null && !descompte.isEmpty() && dies != null && !descompte.isEmpty()) {
-		if (Integer.parseInt(num) <= 0 || Integer.parseInt(dies) <= 0 || (Float.parseFloat(descompte) < 0.0 && Float.parseFloat(descompte) > 1.0)) {
+		int n = Integer.parseInt(num);
+		int d = Integer.parseInt(dies);
+		double des = Double.parseDouble(descompte);
+		if (n <= 0 || d <= 0 || (des < 0.0 && des > 1.0)) {
 
 		    out.println("<html><big> Has introduit malament els parametres, si-us-plau torne ha introduir el cotxe </big>");
 			out.println("<A HREF=\"http://localhost:8080/my_webapp/carrental_form_new.html\">New Car</A></html");
 		}
 		else {
+		    preu *= Double.parseDouble(num);
+		    preu *= Double.parseDouble(dies);
+			Double a = preu * des;
+			preu = preu - a;
+			
 			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("/var/lib/tomcat7/webapps/my_webapp/WEB-INF/classes/mypackage/car.txt", true)));
-			writer.println(model + ", " + engine + ", " + num + ", " + dies + ", " + descompte);
-
+			writer.println(model + ", " + engine + ", " + num + ", " + dies + ", " + descompte + ", " + preu.shortValue());
 			writer.close();
-			out.println("<html><big> Has introduit el cotxe perfectament </big>");
+			out.println("<html><big> Has llogat " + num + " cotxe/s " + model + " de " + engine + " durant " + dies + " dies, amb el descompte " + des + " són " + preu.shortValue() + " Euros </big><br>");
 			out.println("<A HREF=\"http://localhost:8080/my_webapp/carrental_home.html\">Home</A></html");
 		}
 		  

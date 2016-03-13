@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><title>Simplify XML programming with JDOM</title><meta content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))" http-equiv="PICS-Label"><link href="http://purl.org/DC/elements/1.0/" rel="schema.DC"><link href="http://www.ibm.com/favicon.ico" rel="SHORTCUT ICON"><meta content="dW Information/Raleigh/IBM" name="Owner"><meta content="en-US" scheme="rfc1766" name="DC.Language"><meta content="ZZ" name="IBM.Country"><meta content="Public" name="Security"><meta name="Abstract" content="JDOM is a unique Java toolkit for working with XML, engineered to enable rapid development of XML applications. Its design embraces the Java language from syntax to semantics. But is it better than existing -- and more standard -- XML APIs?  Judge for yourself as we run through some examples and illuminate the design goals of this popular open-source project, which recently was formally accepted as a Java Specification Request."><meta name="Description" content="JDOM is a unique Java toolkit for working with XML, engineered to enable rapid development of XML applications. Its design embraces the Java language from syntax to semantics. But is it better than existing -- and more standard -- XML APIs?  Judge for yourself as we run through some examples and illuminate the design goals of this popular open-source project, which recently was formally accepted as a Java Specification Request."><meta name="Keywords" content="java programming code XML JDOM parser toolkit SAX DOM W3C API Xalan wes biggs harry evans, tttjca"><meta name="DC.Date" scheme="iso8601" content="2001-05-01"><meta name="Source" content="Based on v14 Template Generator, Template 14.0"><meta name="DC.Rights" content="Copyright (c) 2001 by IBM Corporation"> <meta name="Robots" content="index,follow"><meta name="IBM.Effective" scheme="W3CDTF" content="2001-05-01"><meta name="Last update" content="10012006mwfergus@us.ibm.com"><link href="Simplify_XML_programming_with_JDOM_files/table.css" media="screen,print" type="text/css" rel="stylesheet"><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/dwcss14.js" type="text/javascript"></script><link rel="stylesheet" href="Simplify_XML_programming_with_JDOM_files/r1v14.css" type="text/css"><link href="Simplify_XML_programming_with_JDOM_files/main.css" type="text/css" rel="stylesheet"><link href="Simplify_XML_programming_with_JDOM_files/screen.css" media="all" type="text/css" rel="stylesheet"><link href="Simplify_XML_programming_with_JDOM_files/print.css" media="print" type="text/css" rel="stylesheet"><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/detection.js" type="text/javascript"></script><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/dropdown.js" type="text/javascript"></script><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/grabtitle.js" type="text/javascript"></script><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/emailfriend2.js" type="text/javascript"></script><script language="JavaScript" src="Simplify_XML_programming_with_JDOM_files/dwplugin.js" type="text/javascript"></script><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><script language="javascript" src="Simplify_XML_programming_with_JDOM_files/ajax1.js" type="text/javascript"></script><script language="javascript" src="Simplify_XML_programming_with_JDOM_files/searchcount.js" type="text/javascript"></script><!--END RESERVED FOR FUTURE USE INCLUDE FILES--><style type="text/css">
+code.section {font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; font-size: 11px}
+.boldcode {font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; font-size: 11px; font-weight: bold} .rboldcode {font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; font-size: 11px; font-weight: bold; color: #ff0000}
+.gboldcode {font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; font-size: 11px; font-weight: bold; color: #ff6600}
+.bboldcode {font-family: Andale Mono, Lucida  Console, Monaco, fixed, monospace; font-size: 11px; font-weight: bold; color: #3c5f84}
+</style><style type="text/css">
+.atitle { font-family:arial,sans-serif; font-size:18px; }
+</style><script language="JavaScript" type="text/javascript">var emailAbstract = "JDOM is a unique Java toolkit for working with XML, engineered to enable rapid development of XML applications. Its design embraces the Java language from syntax to semantics. But is it better than existing -- and more standard -- XML APIs?  Judge for yourself as we run through some examples and illuminate the design goals of this popular open-source project, which recently was formally accepted as a Java Specification Request."; </script><link title="IBM Search" href="http://www.ibm.com/search/opensearch/description.xml" type="application/opensearchdescription+xml" rel="search"></head><body><!--MASTHEAD_BEGIN--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr valign="top">
+<td class="bbg" width="110"><a href="http://www.ibm.com/"><img alt="IBM®" src="Simplify_XML_programming_with_JDOM_files/ibm-logo.gif" border="0" height="52" width="110"></a></td>
+<td class="bbg"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" border="0" height="1" width="1"></td>
+<td class="mbbg" align="right" width="650">
+<table align="right" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr class="cty-tou">
+<td rowspan="2" class="upper-masthead-corner" width="17"><a href="#main"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="Skip to main content" border="0" height="1" width="1"></a></td>
+<td align="left">
+<table align="left" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td><span class="spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span><b class="country">Country/region</b><span class="spacer">&nbsp;[</span><a class="ur-link" href="http://www.ibm.com/developerworks/country/">select</a><span class="spacer">]</span></td>
+<td class="upper-masthead-divider" width="29">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align="left"><a class="ur-link" href="http://www.ibm.com/legal/">Terms of use</a></td>
+</tr>
+</tbody></table>
+</td>
+<td width="40">&nbsp;</td>
+</tr>
+<tr>
+<td class="cty-tou-border" colspan="2" height="1"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="1"></td>
+</tr>
+<tr>
+<td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="8" width="1"></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td colspan="2" align="center">
+<input name="searchType" value="1" type="hidden"><input value="dW" name="searchSite" type="hidden">
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<form method="get" action="//www.ibm.com/developerworks/search/searchResults.jsp" id="form1" name="form1"></form><td width="18"><label for="q"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="Search in:" height="1" width="1"></label></td>
+<td align="right"><select id="sq" name="searchScope" class="input-local" size="1">
+<option value="dW">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;&nbsp;AIX and UNIX</option>
+<option value="eserver">&nbsp;&nbsp;IBM Systems</option>
+<option value="db2">&nbsp;&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;&nbsp;Lotus</option>
+<option value="rdd">&nbsp;&nbsp;Rational</option>
+<option value="tivoli">&nbsp;&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;&nbsp;WebSphere</option>
+<option value="workplace">&nbsp;&nbsp;Workplace</option>
+<option value="dW">-----------------</option> 
+<option value="archZ">&nbsp;&nbsp;Architecture</option>
+<option value="acZ">&nbsp;&nbsp;Autonomic computing</option>
+<option value="gridZ">&nbsp;&nbsp;Grid computing</option>
+<option value="javaZ">&nbsp;&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;&nbsp;Open source</option>
+<option value="paZ">&nbsp;&nbsp;Power Architecture</option>
+<option value="webservZ">&nbsp;&nbsp;SOA &amp; Web services</option>
+<option value="webarchZ">&nbsp;&nbsp;Web development</option>  
+<option value="wirelessZ">&nbsp;&nbsp;Wireless</option> 
+<option value="xmlZ">&nbsp;&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select></td>
+<td align="right" width="7"><label for="q"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="Search for:" height="1" width="1"></label>&nbsp;&nbsp;</td>
+<td align="right"><input class="input" id="q" maxlength="100" name="query" size="15" value="" type="text">
+</td>
+<td width="7">&nbsp;
+</td>
+<td width="90"><input alt="Search" name="Search" src="Simplify_XML_programming_with_JDOM_files/search.gif" value="Search" type="image"></td>
+<!-- <td width="20">&nbsp;</td> -->
+
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td class="blbg" colspan="3">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td><span class="spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+<td><a class="masthead-mainlink" href="http://www.ibm.com/">Home</a></td>
+<td class="masthead-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><a class="masthead-mainlink" href="http://www.ibm.com/products/">Products</a></td>
+<td class="masthead-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><a class="masthead-mainlink" href="http://www.ibm.com/servicessolutions/">Services &amp; industry solutions</a></td>
+<td class="masthead-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><a class="masthead-mainlink" href="http://www.ibm.com/support/">Support &amp; downloads</a></td>
+<td class="masthead-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><a class="masthead-mainlink" href="http://www.ibm.com/account/">My IBM</a></td>
+<td><span class="spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+<script src="Simplify_XML_programming_with_JDOM_files/pmh.js" language="JavaScript" type="text/javascript"></script><img src="Simplify_XML_programming_with_JDOM_files/print-header.gif" alt="" id="print-masthead" height="32" width="510">
+
+<script><!--
+  if(document.images){ (new Image()).src="http://api.collarity.com/cws/v1/nf?appid=ibmdw&u="+escape(document.URL)+"&t="+escape(document.title)+"&r="+escape(document.referrer); } 
+//-->
+</script>
+
+<!--MASTHEAD_END--><table id="v14-body-table" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top"><!--LEFTNAV_BEGIN--><td id="navigation" width="150"><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td class="left-nav-spacer"><a href="http://www.ibm.com/developerworks" class="left-nav-overview">&nbsp;</a></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td colspan="2" class="left-nav-overview"><a href="http://www.ibm.com/developerworks" class="left-nav-overview">developerWorks</a></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td colspan="2" class="left-nav-highlight"><a href="#" class="left-nav">In this article:</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#h1" class="left-nav-child">Java and XML</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#h2" class="left-nav-child">Where JDOM fits</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#h3" class="left-nav-child">Building and manipulating JDOM documents</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#h3" class="left-nav-child">Interoperating with existing XML tools</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#h5" class="left-nav-child">A glimpse of the future</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#resources" class="left-nav-child">Resources</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#author" class="left-nav-child">About the authors</a></td></tr><tr class="left-nav-child-highlight"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/cl-bullet.gif" height="8" width="2"></td><td><a href="#rate" class="left-nav-child">Rate this page</a></td></tr><tr class="left-nav-last"><td width="14"><img class="display-img" alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="14"></td><td width="136"><img class="display-img" alt="" src="Simplify_XML_programming_with_JDOM_files/left-nav-corner.gif" height="19" width="136"></td></tr></tbody></table><br><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td class="related" colspan="2"><b class="related">Related links</b></td></tr><tr class="rlinks"><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/rl-bullet.gif" height="8" width="2"></td><td><a class="rlinks" href="http://www.ibm.com/developerworks/views/java/library.jsp">Java technology technical library</a></td></tr><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- No content currently --><!--END RESERVED FOR FUTURE USE INCLUDE FILES--><tr><td width="14"><img class="display-img" alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="14"></td><td width="136"><img class="display-img" alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="19" width="136"></td></tr></tbody></table><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- Next Steps Area:  Start -->
+<!-- Call Next Steps Servlet -->
+<script language="JavaScript" type="text/javascript">
+<!--
+/*
+ * ajaxInclude makes a call to the url and render the results in the div tag specified in divId
+ */
+function ajaxInclude(url, divId) { 
+ var req = newXMLHttpRequest(); 
+ if (req) { 
+   req.onreadystatechange = getReadyStateHandler(req, 
+	function (result) {  
+           var contents = document.getElementById(divId);  
+           if (result != null && result.length > 0 && contents != null) {
+	     contents.innerHTML = result;  
+           }
+        }); 
+   req.open("GET", url, true);
+   req.send("");
+ }
+}
+//-->
+</script>
+
+<!-- Display Next Steps Result -->
+<div id="nextsteps">
+
+
+
+
+
+ 
+
+
+
+ 
+
+</div>
+
+<!-- Initiate Next Steps Call -->
+<script language="JavaScript" type="text/javascript">
+<!-- 
+ ajaxInclude("/developerworks/niagara/jsp/getNiagaraContent.jsp?url="+window.location.href,"nextsteps");
+//-->
+</script>
+<!-- Next Steps Area:  End --><!--END RESERVED FOR FUTURE USE INCLUDE FILES--></td><!--LEFTNAV_END--><td width="100%"><table id="content-table" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top"><td width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><a name="main"><img alt="skip to main content" src="Simplify_XML_programming_with_JDOM_files/c.gif" border="0" height="1" width="592"></a></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top"><td height="18" width="10"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="18" width="10"></td><td width="100%"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="6" width="1"><br><a style="" href="http://www.ibm.com/developerworks/" class="bctl">developerWorks</a><span class="bct">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span><a class="bctl" href="http://www.ibm.com/developerworks/java/">Java technology</a><span class="bct">&nbsp;&nbsp;&gt;</span><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="1"><br><h1>Simplify XML programming with JDOM</h1><p id="subtitle"><em>This open-source API makes XML document manipulation easy for Java developers</em></p><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" class="display-img" height="6" width="1"></td><td class="no-print" width="192"><a href="http://www.ibm.com/developerworks/"><img alt="developerWorks" src="Simplify_XML_programming_with_JDOM_files/dw.gif" border="0" height="18" width="192"></a></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top"><td width="10"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="10"></td><td width="100%"><table class="no-print" align="right" border="0" cellpadding="0" cellspacing="0" width="160"><tbody><tr><td width="10"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="10"></td><td><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td class="v14-header-1-small">Document options</td></tr></tbody></table><table class="v14-gray-table-border" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="no-padding" width="150"><noscript></noscript><noscript><tr
+valign="top"><td width="8"><img alt="" height="1" width="8"
+src="//www.ibm.com/i/c.gif"/></td><td width="16"><img alt="" width="16"
+height="16" src="//www.ibm.com/i/c.gif"/></td><td class="small"
+width="122"><p><span class="ast">Document options requiring JavaScript
+are not displayed</span></p></td></tr></noscript><table border="0" cellpadding="0" cellspacing="0" width="143"><script language="JavaScript" type="text/javascript">
+<!--
+document.write('<tr valign="top"><td width="8"><img src="//www.ibm.com/i/c.gif" width="8" height="1" alt=""/></td><td width="16"><img alt="Set printer orientation to landscape mode" height="16" src="//www.ibm.com/i/v14/icons/printer.gif" width="16" vspace="3" /></td><td width="122"><p><b><a class="smallplainlink" href="javascript:print()">Print this page</a></b></p></td></tr>');
+//-->
+</script><tbody><tr valign="top"><td width="8"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="8"></td><td width="16"><img alt="Set printer orientation to landscape mode" src="Simplify_XML_programming_with_JDOM_files/printer.gif" height="16" vspace="3" width="16"></td><td width="122"><p><b><a class="smallplainlink" href="javascript:print()">Print this page</a></b></p></td></tr>
+<script language="JavaScript" type="text/javascript">
+<!--
+document.write('<tr valign="top"><td width="8"><img src="//www.ibm.com/i/c.gif" width="8" height="1" alt=""/></td><td width="16"><img src="//www.ibm.com/i/v14/icons/em.gif" height="16" width="16" vspace="3" alt="Email this page" /></td><td width="122"><p><a class="smallplainlink" href="javascript:void newWindow()"><b>E-mail this page</b></a></p></td></tr>');
+//-->
+</script><tr valign="top"><td width="8"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="8"></td><td width="16"><img src="Simplify_XML_programming_with_JDOM_files/em.gif" alt="Email this page" height="16" vspace="3" width="16"></td><td width="122"><p><a class="smallplainlink" href="javascript:void newWindow()"><b>E-mail this page</b></a></p></td></tr><tr valign="top"><td width="8"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="8"></td><td width="16"><img alt="" src="Simplify_XML_programming_with_JDOM_files/fw_bold.gif" border="0" height="16" vspace="3" width="16"></td><td width="122"><p><a class="smallplainlink" href="http://www-106.ibm.com/developerworks/forums/dw_forum.jsp?forum=205&amp;cat=10"><b>Discuss</b></a></p></td></tr></tbody></table></td></tr></tbody></table><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- 11/29/06 commented out by Jill--> 
+
+<!--<br /><table border="0" cellpadding="0" cellspacing="0" width="150"><tr><td class="v14-header-2-small">Using XML, but need to do more?</td></tr></table><table border="0" cellpadding="0" cellspacing="0" class="v14-gray-table-border"><tr><td width="150" class="no-padding"><table border="0" cellpadding="0" cellspacing="0" width="143"><tr valign="top"><td width="8"><img src="//www.ibm.com/i/c.gif" width="8" height="1" alt=""/></td><td><img src="//www.ibm.com/i/v14/icons/fw_bold.gif" height="16" width="16" border="0" vspace="3" alt=""/></td><td width="125"><p><a href="http://www.ibm.com/developerworks/kickstart/database.html?S_TACT=105AGX01&amp;S_CMP=SIMPLEART" class="smallplainlink">Download DB2 Express-C 9</a>
+</p></td></tr></table></td></tr></table>--><!--END RESERVED FOR FUTURE USE INCLUDE FILES--><br><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td class="v14-header-2-small">Rate this page</td></tr></tbody></table><table class="v14-gray-table-border" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="no-padding" width="150"><table border="0" cellpadding="0" cellspacing="0" width="143"><tbody><tr valign="top"><td width="8"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="8"></td><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/d_bold.gif" border="0" height="16" vspace="3" width="16"></td><td width="125"><p><a href="#rate" class="smallplainlink"><b>Help us improve this content</b></a></p></td></tr></tbody></table></td></tr></tbody></table><br></td></tr></tbody></table><p>Level: Intermediate</p><p><a href="#author">Wes Biggs</a> (<a href="mailto:wes@tralfamadore.com?subject=Simplify%20XML%20programming%20with%20JDOM">wes@tralfamadore.com</a>), Senior Developer, T.H.I.<br><a href="#author">Harry Evans</a> (<a href="mailto:harry@tralfamadore.com?subject=Simplify%20XML%20programming%20with%20JDOM">harry@tralfamadore.com</a>), Senior Developer, T.H.I.<br></p><p> 01 May  2001</p><blockquote>JDOM
+is a unique Java toolkit for working with XML, engineered to enable
+rapid development of XML applications. Its design embraces the Java
+language from syntax to semantics. But is it better than existing --
+and more standard -- XML APIs? Judge for yourself as we run through
+some examples and illuminate the design goals of this popular
+open-source project, which recently was formally accepted as a Java
+Specification Request.</blockquote><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><script language="JavaScript" type="text/javascript">
+<!--
+if (document.referrer&&document.referrer!="") { 
+   // document.write(document.referrer);
+   var q = document.referrer;
+   var engine = q;
+   var isG = engine.search(/google\.com/i);
+   var searchTerms;
+   //var searchTermsForDisplay;
+   if (isG != -1) { 
+	   var i = q.search(/q=/);
+	   var q2 = q.substring(i+2);
+	   var j = q2.search(/&/);
+	   j = (j == -1)?q2.length:j;
+	   searchTerms = q.substring(i+2,i+2+j);
+	   if (searchTerms.length != 0) {
+	       searchQuery(searchTerms);
+	       document.write("<div id=\"contents\"></div>");
+	   }
+   } 
+}
+//-->
+</script><div id="contents"><table border="0" cellpadding="0" cellspacing="0" width="75%"><tbody><tr valign="top"><td bgcolor="#f6f6f6" width="16"><img src="Simplify_XML_programming_with_JDOM_files/fw_bold.gif" alt="" border="0" height="16" vspace="3" width="16"></td><td align="left" bgcolor="#f6f6f6" width="*"><p><a class="fbox" width="70%" href="http://www.ibm.com/developerworks/search/searchResults.jsp?source=google&amp;searchType=1&amp;searchSite=dW&amp;searchScope=dW&amp;query=jdom+example+code">More dW content related to: <b>jdom example code</b></a></p></td><td bgcolor="#f6f6f6" width="3"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" border="0" height="1" width="3"></td></tr></tbody></table></div><!--END RESERVED FOR FUTURE USE INCLUDE FILES--><p>
+As a developer, you've probably heard of the 80-20 rule, known in other
+circles as Pareto's Law: a process or methodology will accommodate 80
+percent of all possible situations, and the other 20 percent will need
+to be handled on a case-by-case basis. The corollary for software
+development is that it should be extremely easy for developers to
+accomplish 80 percent of the things they could possibly do with a given
+technology.</p><p>
+Of course, software products and standards don't always evolve
+according to the 80-20 rule. The fractured space of Java XML tools, in
+particular, illustrates an exception to that rule. The Java programming
+world is full of APIs -- some homegrown, some backed by the marketing
+might of
+a major corporation -- that provide sophisticated solutions to
+particular XML tasks. As testament to the universality of XML, for
+every new task, there is a new technology. But what's the glue, and how
+do you go about finding the right tool for the 80 percent of things
+that you have to do over and over -- basic XML tree manipulation with
+an intuitive mapping to the Java language? JDOM is an XML API built
+with exactly that question in mind.
+</p><p><a name="h1"><span class="atitle">Tag, you're it: Java and XML</span></a></p><p>In
+many ways, the Java language has become the programming language of
+choice for XML. With groundbreaking work from the Apache Software
+Foundation and IBM alphaWorks, there are now complete tool chains for
+creating, manipulating, transforming, and parsing XML documents.
+</p><p>But while many Java developers use XML daily, Sun has lagged
+behind the industry in incorporating XML into the Java platform.
+Because the Java 2 platform went gold before XML had made its mark as a
+key technology for everything from business-to-business integration to
+Web site content streamlining, Sun has been using the JSR process to
+grandfather in existing XML APIs that have gained wide acceptability.
+The most significant addition to date has been the inclusion of JAXP,
+the Java API for XML Parsing, which includes three packages: </p><ul>
+<li>
+<code>org.w3c.dom</code>, the Java implementation of the W3C's recommendation for a standard programmatic Document Object Model for XML</li>
+<li>
+<code>org.xml.sax</code>, the event-driven Simple API for XML parsing</li>
+<li>
+<code>javax.xml.parsers</code>, a factory implementation that allows application developers to configure and obtain a particular parser implementation</li>
+</ul><p>
+Though the inclusion of these packages is a good thing for Java
+developers, it merely represents a formal nod to existing API
+standards, and not a giant leap forward in providing elegant Java-XML
+interoperability. What the core Java platform has lacked is an
+intuitive interface for manipulating XML documents as Java objects.
+</p><p>Enter JDOM. The brainchild of two well-known Java developers
+and authors, Brett McLaughlin and Jason Hunter, JDOM was inaugurated as
+an open-source project under an Apache-like license in early 2000. It
+has grown to include contributions and incorporate feedback and bug
+fixes from a wide base of Java developers, and aims to build a complete
+Java platform-based solution for accessing, manipulating, and
+outputting XML data from Java code.
+</p><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="h2"><span class="atitle">It's the API, dummy: Where JDOM fits</span></a></p><p>
+
+JDOM can be used as an alternative to the <code>org.w3c.dom</code>
+package for programmatically manipulating XML documents. It's not a
+drop-in replacement, and, in fact, JDOM and DOM can happily coexist. In
+addition, JDOM is not concerned with parsing XML from text input,
+although it provides wrapper classes that take much of the work out of
+configuring and running a parser implementation. JDOM builds on the
+strengths of existing APIs to build, as the project home page states,
+"a better mousetrap."
+</p><p>
+To understand why there is a need for an alternative API, consider the design constraints of the W3C DOM:
+</p><ul>
+<li>
+<b>Language independent.</b> The DOM wasn't designed with the Java
+language in mind. While this approach keeps a very similar API between
+different languages, it also makes the API more cumbersome for
+programmers who are used to the Java language's idioms. For example,
+while the Java language has a <code>String</code> class built into the language, the DOM specification defines its own <code>Text</code> class.<br>
+<br>
+</li>
+<li>
+<b>Strict hierarchies.</b> The DOM's API follows directly from the XML specification itself. In XML, everything's a node, so you find a <code>Node</code>-based interface in the DOM that almost everything extends and a host of methods that return <code>Node</code>.
+It's elegant from a polymorphism point of view, but as explained above,
+it's difficult and cumbersome to work with in the Java language, where
+explicit downcasts from <code>Node</code> to the leaf types lead to long-winded and less understandable code.<br>
+<br>
+</li>
+<li>
+<b>Interface driven.</b> The public DOM API consists of interfaces only (the one exception, appropriately enough, is an <code>Exception</code>
+class). The W3C isn't interested in providing implementations, just in
+defining interfaces, which makes sense. But it also means that using
+the API as a Java programmer imposes a degree of separation when
+creating XML objects, as the W3C standards make heavy use of generic
+factory classes and similar flexible but less direct patterns. For
+certain uses where XML documents are built only by a parser, and never
+by application-level code, this is irrelevant. But as XML use becomes
+more widespread, not all problems continue to look so parser-driven,
+and application developers need a convenient way to construct XML
+objects programmatically.</li>
+</ul><p>
+To the programmer, these constraints mean a heavy (both in terms of
+memory use and interface size) and unwieldy API that can be hard to
+learn and frustrating to use. In contrast, JDOM was formulated as a
+lightweight API that, first and foremost, is Java-centric. It does away
+with the above awkwardness by turning the DOM's principles on their
+head:
+</p><ul>
+<li>
+<b>JDOM is Java platform specific.</b> The API uses the Java language's built-in <code>String</code> support wherever possible, so that text values are always available as <code>String</code>s. It
+also makes use of the Java 2 platform collection classes, like <code>List</code> and <code>Iterator</code>, providing a rich environment for programmers familiar with the Java language.
+<br>
+<br>
+</li>
+<li>
+<b>No hierarchies.</b> In JDOM, an XML element is an instance of <code>Element</code>, an XML attribute is an instance of <code>Attribute</code>, and an XML document itself is an instance of <code>Document</code>.
+Because all of these represent different concepts in XML, they are
+always referenced as their own types, never as an amorphous "node."<br>
+<br>
+</li>
+<li>
+<b>Class driven.</b> Because JDOM objects are direct instances of classes like <code>Document</code>, <code>Element</code>, and <code>Attribute</code>, creating one is as easy as using the <code>new</code>
+operator in the Java language. It also means that there are no factory
+interfaces to configure -- JDOM is ready to use straight out of the jar.</li>
+</ul><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="h3"><span class="atitle">Look ma, no Nodes: Building and manipulating JDOM documents</span></a></p><p>
+
+JDOM makes use of standard Java coding patterns. Where possible, it uses the Java <code>new</code>
+operator instead of complex factory patterns, making object
+manipulation easy, even for the novice user. For example, let's look at
+how you would build a simple XML document from scratch using JDOM. The
+structure we are going to build is shown in Listing 1. (Download the
+complete code for this article from <a href="#resources">Resources</a>.) </p><br><a name="code1"><b>Listing 1. Sample XML document to build</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;car vin="123fhg5869705iop90"&gt;
+  &lt;!--Description of a car--&gt;
+  &lt;make&gt;Toyota&lt;/make&gt;
+  &lt;model&gt;Celica&lt;/model&gt;
+  &lt;year&gt;1997&lt;/year&gt;
+  &lt;color&gt;green&lt;/color&gt;
+  &lt;license state="CA"&gt;1ABC234&lt;/license&gt;
+&lt;/car&gt;
+</code></pre></td></tr></tbody></table><br><p>
+Note: We'll build <a href="http://www-128.ibm.com/developerworks/java/library/j-jdom/code.html" target="_new">the sample document</a> detailed in Listings 2 through 7 below.</p><p>To begin, let's create the root element and add it to a document:</p><br><a name="code2"><b>Listing 2. Creating a Document
+</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+Element carElement = new Element("car");
+Document myDocument = new Document(carElement);
+</code></pre></td></tr></tbody></table><br><p>
+This step creates a new <code>org.jdom.Element</code> and makes it the root element of the <code>org.jdom.Document</code>
+<code>myDocument</code>. (If you're using the sample code provided in <a href="#resources">Resources</a>, make sure to import <code>org.jdom.*</code>.) Because an XML document must always have a single root element, <code>Document</code> takes the <code>Element</code> in its constructor. </p><p>Next, we'll add the <code>vin</code> attribute:</p><br><a name="code3"><b>Listing 3. Adding an Attribute
+</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+carElement.addAttribute(new Attribute("vin", "123fhg5869705iop90"));
+</code></pre></td></tr></tbody></table><br><p>
+Adding elements is also very straightforward. Here we add the <code>make</code> element:
+</p><br><a name="code4"><b>Listing 4.  Elements and sub-elements</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+Element make = new Element("make");
+make.addContent("Toyota");
+carElement.addContent(make);
+</code></pre></td></tr></tbody></table><br><p>
+Because the <code>addContent</code> method of <code>Element</code> returns the <code>Element</code>, we could also write this as:
+</p><br><a name="code5"><b>Listing 5. Adding elements in a terse form</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+carElement.addContent(new Element("make").addContent("Toyota"));
+</code></pre></td></tr></tbody></table><br><p>
+Both of these statements accomplish the same thing. Some would argue that
+the first example is more readable, but the second becomes more
+readable if you are constructing many elements at once. To finish
+constructing the document:
+</p><br><a name="code6"><b>Listing 6. Adding the remaining elements</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+carElement.addContent(new Element("model").addContent("Celica"));
+carElement.addContent(new Element("year").addContent("1997"));
+carElement.addContent(new Element("color").addContent("green"));
+carElement.addContent(new Element("license")
+    .addContent("1ABC234").addAttribute("state", "CA"));
+</code></pre></td></tr></tbody></table><br><p>
+You will notice that for the <code>license</code> element, we not only added the
+content of the element, we also added an attribute to it, specifying the
+state in which the license was issued.  This is possible because the
+<code>addContent</code> methods on <code>Element</code> always return the <code>Element</code> itself, instead of having a void declaration.
+</p><p>
+Adding a comment section or other standard XML types is done the same way:
+</p><br><a name="code7"><b>Listing 7. Adding a comment</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+carElement.addContent(new Comment("Description of a car"));
+</code></pre></td></tr></tbody></table><br><p>
+Manipulation of the document takes place in a similar fashion. For
+example, to obtain a reference to the <code>year</code> element, we use the <code>getChild</code> method of <code>Element</code>:
+</p><br><a name="code8"><b>Listing 8. Accessing child elements</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+Element yearElement = carElement.getChild("year");
+</code></pre></td></tr></tbody></table><br><p>
+This statement actually will return the first child <code>Element</code> with the element
+name <code>year</code>. If there is no <code>year</code> element, then the call will return
+null. Note that we didn't need to upcast the return value from anything like the DOM <code>Node</code> interface -- children of <code>Element</code>s are simply <code>Element</code>s. In a similar fashion, we can remove the <code>year</code> element from the document:
+</p><br><a name="code9"><b>Listing 9. Removing child elements</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+boolean removed = carElement.removeChild("year");
+</code></pre></td></tr></tbody></table><br><p>
+This call will remove the <code>year</code> element only; the rest of the document
+remains unchanged.
+</p><p>
+So far, we have covered how documents can be created and manipulated.
+To output our finished document to the console we can use JDOM's <code>XMLOutputter</code> class:
+</p><br><a name="code10"><b>Listing 10. Turning JDOM into XML text</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+try {
+    XMLOutputter outputter = new XMLOutputter("  ", true);
+    outputter.output(myDocument, System.out);
+} catch (java.io.IOException e) {
+    e.printStackTrace();
+}
+</code></pre></td></tr></tbody></table><br><p>
+<code>XMLOutputter</code> has a few formatting options. Here we've specified that we
+want child elements indented two spaces from the parent element, and that
+we want new lines between elements. <code>XMLOutputter</code> can output to either
+a <code>Writer</code> or an <code>OutputStream</code>. To output to a file we could simply
+change the output line to:
+</p><br><a name="code11"><b>Listing 11. Using a FileWriter to output XML</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+FileWriter writer = new FileWriter("/some/directory/myFile.xml");
+outputter.output(myDocument, writer);
+writer.close();
+</code></pre></td></tr></tbody></table><br><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="h3"><span class="atitle">Plays well with others: Interoperating with existing XML tools</span></a></p><p>
+
+One of the interesting features of JDOM is its interoperability with
+other APIs. Using JDOM, you can output a document not only to a <code>Stream</code> or a <code>Reader</code>, but also as a SAX <code>Event Stream</code> or as a DOM <code>Document</code>.
+This flexibility allows JDOM to be used in a heterogeneous environment
+or to be added to systems already using another method for handling
+XML. As we'll see in a later example, it also allows JDOM to use other
+XML tools that don't yet recognize the JDOM data structures natively.
+</p><p>
+Another use of JDOM is the ability to read and manipulate XML data that
+already exists. Reading a well-formed XML file is done by using one of the
+classes in <code>org.jdom.input</code>. In this example, we'll use <code>SAXBuilder</code>:
+</p><br><a name="code12"><b>Listing 12.  Parsing an XML file with SAXBuilder
+</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+try {
+  SAXBuilder builder = new SAXBuilder();
+  Document anotherDocument = 
+    builder.build(new File("/some/directory/sample.xml"));
+} catch(JDOMException e) {
+  e.printStackTrace();
+} catch(NullPointerException e) {
+  e.printStackTrace();
+}
+</code></pre></td></tr></tbody></table><br><p>
+You can manipulate the document built through this process in the same ways shown back in Listings 2 through  7.</p><p>
+Another practical application of JDOM combines it with the Xalan product from Apache (see <a href="#resources">Resources</a>).
+Using the car example above, we will construct a Web page for an online
+car dealer presenting the details of a particular car. First, we will
+assume that the document we built above represents the information
+about the car we are going to present
+to the user. Next, we will combine this JDOM <code>Document</code> with an XSL stylesheet and output the HTML-formatted results to a servlet's <code>OutputStream</code> for display in the user's browser.
+</p><p>
+In this case, the XSL stylesheet we are going to use is called <code>car.xsl</code>:
+</p><br><a name="code13"><b>Listing 13. XSL document for transforming car records to HTML</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:template match="/car"&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+          &lt;title&gt;&lt;xsl:value-of select="make"/&gt; &lt;xsl:value-of select="model"/&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+          &lt;h1&gt;&lt;xsl:value-of select="make"/&gt;&lt;/h1&gt;&lt;br /&gt;
+          &lt;h2&gt;&lt;xsl:value-of select="model"/&gt;&lt;/h2&gt;&lt;br /&gt;
+          &lt;table border="0"&gt;
+          &lt;tr&gt;&lt;td&gt;VIN:&lt;/td&gt;&lt;td&gt;&lt;xsl:value-of select="@vin"/&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;Year:&lt;/td&gt;&lt;td&gt;&lt;xsl:value-of select="year"/&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;Color:&lt;/td&gt;&lt;td&gt;&lt;xsl:value-of select="color"/&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;/table&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre></td></tr></tbody></table><br><p>
+Now we will turn the <code>org.jdom.Document</code> into a DOM <code>Document</code> and feed it to Xalan, along with the file that represents our XSL and the <code>OutputStream</code> that
+we obtained from our hypothetical application server, which happens to be using servlets (shown in Listing 14).
+</p><br><a name="code14"><b>Listing 14. Creating an HTML document with JDOM and Xalan</b></a><br><table bgcolor="#eeeeee" border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td><pre><code class="section">
+
+TransformerFactory tFactory = TransformerFactory.newInstance();
+
+// Make the input sources for the XML and XSLT documents
+org.jdom.output.DOMOutputter outputter = new org.jdom.output.DOMOutputter();
+org.w3c.dom.Document domDocument = outputter.output(myDocument);
+javax.xml.transform.Source xmlSource = 
+  new javax.xml.transform.dom.DOMSource(domDocument);
+StreamSource xsltSource = 
+  new StreamSource(new FileInputStream("/some/directory/car.xsl"));
+
+// Make the output result for the finished document using 
+// the HTTPResponse OutputStream
+StreamResult xmlResult = new StreamResult(response.getOutputStream());
+
+// Get a XSLT transformer
+Transformer transformer = tFactory.newTransformer(xsltSource);
+
+// Do the transform
+transformer.transform(xmlSource, xmlResult);
+</code></pre></td></tr></tbody></table><br><p>
+In this example, the output is streamed through the <code>HTTPResponse</code>
+<code>OutputStream</code> of a Java servlet. However, the stream could just as easily be a filestream as in our earlier example with <code>XMLOutputter</code>. We used <code>DOMOutputter</code> to generate the XML source for Xalan. However, we could generate the same input by using <code>XMLOutputter</code> to output our XML document as a <code>String</code> and then make it into a <code>StreamSource</code>. Talk about flexibility: JDOM can output its structure as a <code>String</code>, a SAX <code>Event Stream</code>, or a DOM <code>Document</code>.
+This allows JDOM to interface with tools that can take any of these
+models as input. (For additional functionality, check the JDOM Web site
+for the <code>contrib</code> package, where you'll find a worthy
+library of JDOM-based utilities that provide tools like a JDBC
+ResultSet-based builder, XPATH implementation, and more.)
+</p><p>In just a few lines of code, JDOM enables a wide variety of
+functionality. We have parsed and programatically created XML documents
+in XML, manipulated those documents, and used them to produce an XML-
+driven Web page.
+</p><table align="right" border="0" cellpadding="0" cellspacing="0" width="40%"><tbody><tr><td width="10"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="10"></td><td><table border="1" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td bgcolor="#eeeeee">
+<a name="sidebar"><b>Sun and JDOM: What's in a name?</b></a><br>
+The official 1.0 release of JDOM may coincide with
+its continuing evolution in the Java Community Process. Submitted as
+JSR-102, JDOM has been approved for eventual inclusion in the core
+Java platform, with this comment from Sun: "JDOM does appear to be
+significantly easier to use than the earlier APIs, so we believe it
+will be a useful addition to the platform."  According to the JSR, a
+1.0 release might see JDOM's packaging change from "org.jdom" to
+"javax.xml.tree". While the future certainly looks positive,
+developers may eventually have to retrofit their code to work with the
+new version.
+</td></tr></tbody></table></td></tr></tbody></table><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="h5"><span class="atitle">JDOM grows up: A glimpse of the future</span></a></p><p>
+As of this writing, the JDOM project has released its Beta 6 version.
+Even with its beta status, JDOM has proved to be a stable
+implementation for many real-world implementations. While
+much of the API is solid, work continues in a number of areas that will
+potentially impact the existing interfaces. Therefore, any development
+projects undertaken at this point need not shirk JDOM for fear of a
+buggy implementation, but should consider the fact that certain method
+signatures or specific semantics are still likely to change before
+final release and potential adoption into the core Java API. (See <a href="#sidebar">What's in a name?</a>)
+</p><p>
+The near-term to-do list for JDOM is focused on stabilizing the API and
+evaluating the performance aspects of parts of the implementation.
+Other items that are in progress but that could hinder some application
+developers include support for DTD entities and other less frequent
+constructs. Further down the road is core support for XPATH, the XML
+path language native to applications like XSLT, and more direct
+integration with XML data sources.
+</p><p>So, in conclusion, is JDOM better than existing XML APIs? If
+you dream in Java, the answer is probably yes. JDOM isn't meant to
+supercede your favorite parser or XML-aware database, but its design
+principles make for a particularly rapid learning curve for Java
+developers entering or well on their way to ruling the XML world.
+</p><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="resources"><span class="atitle">Resources</span></a></p><ul><li><a href="http://www-106.ibm.com/developerworks/forums/dw_forum.jsp?forum=205&amp;cat=10">Participate in the discussion forum</a>.<br><br></li><li>Download the <a href="http://www-128.ibm.com/developerworks/java/library/j-jdom/jdomExamples.jar">sample code</a>
+(source and compiled versions of a Java class that includes all the
+example code and the XML and XSL files used in this article). You will
+need JDOM, Xerces, and Xalan in your classpath to run the code.<br>
+<br>
+<br><br></li><li>For the latest release of JDOM, online API documentation and more, check out the <a href="http://www.jdom.org/">JDOM Web site</a>.<br>
+<br>
+<br><br></li><li>For more information about Xalan, Xerces, and other Java XML products, check out the <a href="http://xml.apache.org/">Apache XML site</a>.<br>
+<br>
+<br><br></li><li>Visit the <a href="http://www.xml.com/">XML Web site</a> for general XML information, tutorials, and resources. <br>
+<br>
+<br><br></li><li>And don't forget the developerWorks <a href="http://www.ibm.com/developerworks/xml/">XML zone</a> for a wealth of XML-related content.<br>
+<br>
+<br><br></li><li>IBM's alphaWorks site offers several tools for Java and XML developers:
+	<ul>
+<li>
+<a href="http://xerces.apache.org/xerces2-j/">Apache's Xerces-J Parser</a>
+introduces the Xerces Native Interface (XNI), a complete framework for
+building parser components and configurations that is extremely modular
+and easy to program.</li>
+<li>To diagnose improper use of the XML Schema language, try <a href="http://alphaworks.ibm.com/tech/xmlsqc/">XML Schema Quality Checker</a>.</li>
+<li>The <a href="http://alphaworks.ibm.com/tech/xmlsecuritysuite/">XML Security Suite</a> offers a variety of security features such as digital signature, element-wise encryption, and access control.</li>
+</ul>
+<br>
+<br></li><li>JDOM's creators are both well-known authors. We recommend you read Jason Hunter's <a href="http://www.amazon.com/gp/product/0596000405/qid=988411810/sr=2-1/103-4008905-9647037?n=283155">
+<i>Java Servlet Programming, 2nd Edition</i>
+</a> (O'Reilly, April 2001) and Brett McLaughlin's <a href="http://www.amazon.com/gp/product/0596000162/qid=988412025/sr=1-1/ref=sc_b_2/103-4008905-9647037?n=283155">
+<i>Java and XML</i>
+</a> (O'Reilly, June 2000).<br>
+<br>
+<br><br></li><li>In addition, Brett's written several related articles for developerWorks:
+<ul>
+<li>"<a href="http://www.ibm.com/developerworks/java/library/x-tipcdm.html">Converting from DOM</a>" (April 2001)</li>
+<li>"<a href="http://www.ibm.com/developerworks/java/library/x-tipcsx.html">Converting from SAX</a>" (April 2001)</li>
+<li>"<a href="http://www.ibm.com/developerworks/java/library/x-tipjdom.html">Using JDOM and XSLT</a>" (March 2001)</li>
+<li>"<a href="http://www.ibm.com/developerworks/java/library/x-jaxp/">All about JAXP</a>" (November 2000)</li>
+<li>"<a href="http://www.ibm.com/developerworks/java/library/x-jaxp1.html">JAXP revisited</a>" (December 2000)</li>
+</ul>
+<br>
+<br></li><li>Join the developerWorks <a href="news://news.software.ibm.com/ibm.software.developerworks.xml.javatools">XML tools and APIs discussion</a> for Java developers. <br>
+<br>
+<br><br></li><li>Here's more information on <a href="http://www-4.ibm.com/software/webservers/appserv/doc/v35/ae/infocenter/was/04020306.html">using DOM to incorporate XML documents into applications</a>.<br>
+<br>
+<br></li></ul><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p><a name="author"><span class="atitle">About the authors</span></a></p><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="5" width="100%"></td></tr><tr align="left" valign="top"><td><p></p></td><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="5" width="4"></td><td width="100%"><p>Wes
+Biggs has developed Internet applications for companies including the
+Los Angeles Times, USWeb and Elite Information Systems. He is a
+frequent contributor to open source Java projects and maintains the
+Free Software Foundation's <code>gnu.regexp</code> regular expression package. Contact Wes at <a href="mailto:wes@tralfamadore.com">wes@tralfamadore.com</a>.
+</p></td></tr></tbody></table><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="5" width="100%"></td></tr><tr align="left" valign="top"><td><p></p></td><td><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="5" width="4"></td><td width="100%"><p>Harry
+Evans' experience in software design and application engineering
+includes the design of several Web-based and Internet-aware products,
+mostly in a start-up environment. He has worked in all stages of
+product life cycle, from Rapid Application Development to legacy
+product integration. Contact Harry at <a href="mailto:wes@tralfamadore.com">harry@tralfamadore.com</a>.
+</p></td></tr></tbody></table><br><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="Simplify_XML_programming_with_JDOM_files/blue_rule.gif" alt="" height="1" width="100%"></td></tr></tbody></table><table class="no-print" align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br><p class="no-print"><span class="atitle"><a name="rate">Rate this page</a></span></p><span class="no-print"><form action="//www-128.ibm.com/developerworks/utils/RatingsHandler" method="post"><input value="Simplify XML programming with JDOM" name="ArticleTitle" type="hidden"><input value="Java technology" name="Zone" type="hidden"><input value="http://www.ibm.com/developerworks/thankyou/feedback-thankyou.html" name="RedirectURL" type="hidden"><input value="10537" name="ArticleID" type="hidden"><input value="05012001" name="publish-date" type="hidden"><input name="author1-email" value="wes@tralfamadore.com" type="hidden"><input name="author1-email-cc" value="" type="hidden"><input name="author2-email" value="harry@tralfamadore.com" type="hidden"><input name="author2-email-cc" value="" type="hidden"><script language="javascript" type="text/javascript">document.write('<input type="hidden" name="url" value="'+location.href+'">');</script><input name="url" value="http://www-128.ibm.com/developerworks/java/library/j-jdom/" type="hidden"><img src="Simplify_XML_programming_with_JDOM_files/gray_rule.gif" alt="" height="1" width="100%"><br><table class="v14-gray-table-border" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="3"><p>Please take a moment to complete this form to help us better serve you.</p></td></tr><tr valign="top"><td width="140"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="140"><br><p><label for="Goal">Did the information help you to achieve your goal?</label></p></td><td width="303"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="6" width="303"><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><input value="Yes" id="Goal" name="Goal" type="radio">Yes</td><td><input value="No" id="Goal" name="Goal" type="radio">No</td><td><input value="Don't know" id="Goal" name="Goal" type="radio">Don't know</td></tr></tbody></table></td><td width="100%">&nbsp;</td></tr><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="12" width="8"></td></tr><tr valign="top"><td width="140"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="140"><br><p><label for="Comments">Please provide us with comments to help improve this page:</label></p></td><td width="303"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="6" width="303"><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><textarea class="iform" cols="35" rows="5" wrap="virtual" id="Comments" name="Comments">&nbsp;</textarea></td></tr></tbody></table></td><td width="100%">&nbsp;</td></tr><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="12" width="8"></td></tr><tr valign="top"><td width="140"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="1" width="140"><br><p><label for="Rating">How useful is the information?
+<br>
+(1 = Not at all,
+<br>
+5 = Extremely useful)</label></p></td><td width="303"><img src="Simplify_XML_programming_with_JDOM_files/c.gif" alt="" height="6" width="303"><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><input value="1" id="Rating" name="Rating" type="radio">1</td><td><input value="2" id="Rating" name="Rating" type="radio">2</td><td><input value="3" id="Rating" name="Rating" type="radio">3</td><td><input value="4" id="Rating" name="Rating" type="radio">4</td><td><input value="5" id="Rating" name="Rating" type="radio">5</td></tr></tbody></table></td><td width="100%">&nbsp;</td></tr></tbody></table></td></tr></tbody></table><table class="v14-gray-table-border" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="8" width="8"></td></tr><tr><td width="8"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="8"></td><td colspan="3"><input alt="Submit" src="Simplify_XML_programming_with_JDOM_files/submit.gif" border="0" height="21" type="image" width="120"></td></tr><tr><td colspan="3"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="8" width="8"></td></tr></tbody></table></form><br></span><span class="no-print"><table align="right" cellpadding="0" cellspacing="0"><tbody><tr align="right"><td><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="middle"><img src="Simplify_XML_programming_with_JDOM_files/u_bold.gif" alt="" border="0" height="16" width="16"><br></td><td align="right" valign="top"><a href="#main" class="fbox"><b>Back to top</b></a></td></tr></tbody></table></td></tr></tbody></table><br><br></span></td><td width="10"><img alt="" src="Simplify_XML_programming_with_JDOM_files/c.gif" height="1" width="10"></td></tr></tbody></table></td></tr></tbody></table><!--FOOTER_BEGIN--><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="bbg" height="19"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td><span class="spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="http://www.ibm.com/ibm/" class="mainlink">About IBM</a></td><td class="footer-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="http://www.ibm.com/privacy/" class="mainlink">Privacy</a></td><td class="footer-divider" width="27">&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="http://www.ibm.com/contact/" class="mainlink">Contact</a></td></tr></tbody></table></td></tr></tbody></table><script language="JavaScript1.2" type="text/javascript" src="Simplify_XML_programming_with_JDOM_files/stats.js"></script><noscript><img border="0" alt="" height="1" width="1" src="//stats.www.ibm.com/rc/images/uc.GIF?R=noscript"/></noscript><!--FOOTER_END--><!--XSLT stylesheet used to transform this file:  dw-document-html-5.3.xsl--></body></html>

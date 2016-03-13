@@ -1,0 +1,93 @@
+PRACTICA JDOM
+=============
+
+1.- Agafarem com a base l'article que podeu trobar a:
+http://www-128.ibm.com/developerworks/java/library/j-jdom/
+(teniu una copia local de l'article a: Simplify_XML_programming_with_JDOM.html)
+i el codi d'exemple que venia en el article
+(que podeu trobar dins de 'jdomExamples' amb uns quants retocs de part meva).
+
+2.- Preparar entorn:
+
+- JDOM
+$ bash
+$ wget http://www.jdom.org/dist/binary/jdom-1.0.tar.gz 
+$ tar xzvf jdom-1.0.tar.gz
+
+- XALAN i XERCES
+$ wget http://apache.rediris.es/xml/xalan-j/xalan-j_2_7_0-bin-2jars.tar.gz
+$ tar xzvf xalan-j_2_7_0-bin-2jars.tar.gz
+
+- CLASSPATH
+$ CLASSPATH=~/JDOM/xalan-j_2_7_0/xalan.jar:~/JDOM/xalan-j_2_7_0/xercesImpl.jar:~/JDOM/jdom-1.0/build/jdom.jar:.
+$ export CLASSPATH
+
+- COMPILAR EXEMPLE
+$ cd jdomExamples/
+$ rm Article.class
+$ javac Article.java
+
+3.- Modificar l'exemple per que guardi els lloguers en un fitxer xml i tingui les seguents comandes:
+	- 'reset': Deixa la llista de lloguers buida.
+	- 'lloguer': obté per teclat les dades del lloguer i l'afageix al xml
+	- 'llistar': llista tots els lloguers en xml
+	- 'xsl': llista els lloguers en html (transformat amb un xsl)
+
+PISTES VARIES:
+---
+
+- PER ACCEDIR A TOTS ELS SUBELEMENTS D'UN ELEMENT: getChildren()
+
+import java.util.List;
+import java.util.Iterator;
+
+    public static void accessChildElement(Document myDocument) {
+        Element carsElement = myDocument.getRootElement();
+	List cars = carsElement.getChildren();
+	Iterator itr = cars.iterator();
+	while (itr.hasNext()) {
+	    Element carElement = (Element) itr.next();
+	    Element yearElement = carElement.getChild("year");
+
+		[...]
+	}
+    }
+
+---
+
+PER PRETTY FORMAT AL XML:
+
+import org.jdom.output.Format;
+
+	[...]
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+	[...]
+
+---
+
+LLEGIR DE TECLAT:
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+	[...]
+	BufferedReader stdin = new BufferedReader
+	    (new InputStreamReader(System.in));
+
+	try {
+	    String m;
+	    System.out.print ("Introdueix el teu nom: ");
+	    System.out.flush();
+	    m = stdin.readLine();
+	} catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+	[...]
+
+---
+
+Aquí s'explica que és el "car vin":
+http://www.vehicleidentificationnumber.com/vehicle_identification_numbers_vin_detail.html
+
+---
+

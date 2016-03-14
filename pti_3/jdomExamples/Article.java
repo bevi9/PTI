@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -63,8 +65,20 @@ public class Article {
     }
     
     
-    public static Document reset(Document document) {
-    	Element root = document.getRootElement
+    public static Document reset() {
+    	Document doc = new Document();
+    	readDocument();
+		doc.readDocument();
+		doc.getRootElement().removeContent();
+		try {
+            // XMLOutputter outputter = new XMLOutputter("  ", true);
+            XMLOutputter outputter = new XMLOutputter();
+	    	FileWriter fw = new FileWriter("xml/Sample.xml");
+        	outputter.output(doc, fw);
+			fw.close();
+    	} catch (java.io.IOException e) {
+            e.printStackTrace();
+    	}
     	
     }
     
@@ -106,6 +120,70 @@ public class Article {
         return myDocument;
     }
 
+    public static void writeXML(Document myDocument) {
+    	
+    	BufferedReader stdin = new BufferedReader (new InputStreamReader(System.in));
+    	try {
+    		String vin;
+    		System.out.print("Introdueix el vin");
+    		System.out.flush();
+    		vin = stdin.readLine();
+    	}
+    	catch (java.io.IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+    		String model;
+    		System.out.print("introdueix el model");
+    		System.out.flush();
+    		model = stdin.readLine();
+    	}
+    	catch (java.io.IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+    		System.out.print("introdueix el any");
+    		System.out.flush();
+    		String any = stdin.readLine();
+    	}
+    	catch (java.io.IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+    		System.out.print("introdueix l'estat");
+    		System.out.flush();
+    		String estat = stdin.readLine();
+    	}
+    	catch (java.io.IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+    		System.out.print("introdueix la licencia");
+    		System.out.flush();
+    		String licencia = stdin.readLine();
+    	}
+    	catch (java.io.IOException e) {
+    		e.printStackTrace();
+    	}
+
+    	
+    	// Create the root element
+        /*Element carElement = new Element("car");
+        
+        carElement.setAttribute(new Attribute("vin", vin));
+  
+    	 //afegir
+    	 carElement.addContent(new Element("model").addContent(model));
+         carElement.addContent(new Element("year").addContent(any));
+         carElement.addContent(new Element("color").addContent(color));
+         carElement.addContent(new Element("license").addContent(licencia).setAttribute("state", estat));*/
+    }
+    
+    
     /**
      * This method accesses a child element of the root element of the
      * document built in listing 2 with the createDocument method.
@@ -244,9 +322,9 @@ public class Article {
             else if(command.equals("file")) outputDocumentToFile(createDocument());
             else if(command.equals("read")) outputDocument(readDocument());
             else if(command.equals("xsl")) executeXSL(createDocument());
-            else if(command.equals("reset")) ;
-            else if(command.equals("llistar")) ;
-            else if(command.equals("lloguer")) ;
+            else if(command.equals("reset"));
+            else if(command.equals("llistar"));
+            else if(command.equals("lloguer")) writeXML(readDocument());
             else {
                 System.out.println(command + " is not a valid option.");
                 printUsage();

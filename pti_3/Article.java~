@@ -44,7 +44,7 @@ import org.jdom.output.XMLOutputter;
 
 public class Article {
 
-	private static String documentXML="xml/sample.xml";
+	private static String documentXML="xml/lloguer.xml";
 
     /**
      * Read and parse an xml document from the file at xml/sample.xml.
@@ -162,7 +162,7 @@ public class Article {
     		System.out.flush();
     		licencia = stdin.readLine();
     	
-		Element carElement = new Element("car");
+		Element carElement = new Element("lloguer");
 		//create the document
 	 	Document myDocument = new Document(carElement);
 		//add a comment
